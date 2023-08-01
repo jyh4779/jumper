@@ -15,11 +15,6 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
     private var touchPointWidth = 0
     private var touchPointHeight = 0
 
-    var layoutHeight = 0F
-    var layoutWidth = 0F
-    var zolaHeight = 0F
-    var zolaWidth = 0F
-
     var jumpBtnClass = JumpBtnClass()
     var zolaMotionClass = ZolaMotionClass()
 
@@ -41,7 +36,7 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         setZolaInit()
         getTouchPointSize()
 
-        zolaMotionClass.setZolaInGravity(playBinding.zola, layoutHeight-zolaWidth)
+        zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight-zolaHeight)
     }
 
     fun setZolaInit() {
@@ -92,20 +87,22 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         var x = event.getX()
         var y = event.getY()
 
-        when(event.action){
+        when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 jumpBtnClass.startX = x
                 jumpBtnClass.startY = y
-                jumpBtnClass.touchPointX = x-touchPointWidth/2
-                jumpBtnClass.touchPointY = y-touchPointHeight/2
+                jumpBtnClass.touchPointX = x - touchPointWidth / 2
+                jumpBtnClass.touchPointY = y - touchPointHeight / 2
                 jumpBtnClass.downTouchPoint(playBinding.touchPoint, playBinding.touchLine)
             }
+
             MotionEvent.ACTION_MOVE -> {
                 val text1 = jumpBtnClass.moveTouchPoint(x, y, playBinding.touchLine)
                 playBinding.playData = PlayData(text1)
 
                 zolaMotionClass.setZolaJumpMotion(playBinding.zola)
             }
+
             MotionEvent.ACTION_UP -> {
                 jumpBtnClass.upTouchPoint(playBinding.touchPoint, playBinding.touchLine, x, y)
 

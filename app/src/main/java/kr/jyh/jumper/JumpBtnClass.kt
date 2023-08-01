@@ -1,6 +1,5 @@
 package kr.jyh.jumper
 
-import android.content.Context
 import android.util.Log
 import android.view.View
 import java.lang.Math.atan2
@@ -16,8 +15,8 @@ class JumpBtnClass {
     fun downTouchPoint(tPoint:View, tLine:View){
         Log.d("JumpBtnClass","[downTouchPoint] start")
 
-        Log.d("JumpBtnClass","[downTouchPoint] TouchPointX = $touchPointX")
-        Log.d("JumpBtnClass","[downTouchPoint] TouchPointY = $touchPointY")
+        //Log.d("JumpBtnClass","[downTouchPoint] TouchPointX = $touchPointX")
+        //Log.d("JumpBtnClass","[downTouchPoint] TouchPointY = $touchPointY")
 
         tPoint.setX(touchPointX)
         tPoint.setY(touchPointY)
@@ -25,8 +24,8 @@ class JumpBtnClass {
 
         var tLineY = startY - tLine.getHeight()/2
 
-        Log.d("JumpBtnClass","[downJumpBtn] TouchLineX = $startX")
-        Log.d("JumpBtnClass","[downJumpBtn] TouchLineY = $tLineY")
+        //Log.d("JumpBtnClass","[downJumpBtn] TouchLineX = $startX")
+        //Log.d("JumpBtnClass","[downJumpBtn] TouchLineY = $tLineY")
 
         tLine.setX(startX)
         tLine.setY(tLineY)
@@ -35,7 +34,11 @@ class JumpBtnClass {
     fun moveTouchPoint(endX:Float, endY:Float, tLine:View):String {
         Log.d("JumpBtnClass","[moveTouchPoint] start")
 
-        tLine.rotation = getDegree(endX, endY).toFloat()
+        var tLineAngle = getDegree(endX, endY).toFloat()
+        if(tLineAngle > 45) tLineAngle = 45F
+        if(tLineAngle < -45) tLineAngle = -45F
+
+        tLine.rotation = tLineAngle
 
         tLine.setSize((getLineHeight(endX, endY).toInt())*2)
         var tLineY = startY - tLine.getHeight()/2
@@ -46,11 +49,16 @@ class JumpBtnClass {
     fun upTouchPoint(tPoint:View, tLine:View, x:Float, y:Float){
         Log.d("JumpBtnClass","[upTouchPoint] start")
 
-        Log.d("JumpBtnClass","[upTouchPoint] x = $x")
-        Log.d("JumpBtnClass","[upTouchPoint] y = $y")
+        //Log.d("JumpBtnClass","[upTouchPoint] x = $x")
+        //Log.d("JumpBtnClass","[upTouchPoint] y = $y")
+
+        fClickPower = tLine.getHeight().toFloat()
+        fClickAngle = tLine.rotation
 
         tPoint.setVisibility(View.INVISIBLE)
         tLine.setVisibility(View.INVISIBLE)
+
+        dZolaState = ZOLAJUMP
     }
 
     fun getDegree(endX:Float, endY:Float): Double {
@@ -73,12 +81,21 @@ class JumpBtnClass {
 
     fun View.setSize(dHeight: Int) {
         Log.d("JumpBtnClass", "[setSize] Start")
-        Log.d("JumpBtnClass", "[setSize] dHeight[$dHeight]")
+        //Log.d("JumpBtnClass", "[setSize] dHeight[$dHeight]")
 
         val lp = layoutParams
-        lp?.let {
-            lp.height = dHeight
-            layoutParams = lp
+
+        if(dHeight > MAXPOWERGAUGE){
+            lp?.let {
+                lp.height = MAXPOWERGAUGE
+                layoutParams = lp
+            }
+        }
+        else{
+            lp?.let {
+                lp.height = dHeight
+                layoutParams = lp
+            }
         }
     }
 }
