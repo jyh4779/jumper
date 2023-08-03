@@ -2,6 +2,7 @@ package kr.jyh.jumper
 
 import android.util.Log
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import java.lang.Math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -13,7 +14,7 @@ class JumpBtnClass {
     var touchPointY = 0F
 
     fun downTouchPoint(tPoint:View, tLine:View){
-        Log.d("JumpBtnClass","[downTouchPoint] start")
+        //Log.d("JumpBtnClass","[downTouchPoint] start")
 
         //Log.d("JumpBtnClass","[downTouchPoint] TouchPointX = $touchPointX")
         //Log.d("JumpBtnClass","[downTouchPoint] TouchPointY = $touchPointY")
@@ -32,7 +33,7 @@ class JumpBtnClass {
         tLine.setVisibility(View.VISIBLE)
     }
     fun moveTouchPoint(endX:Float, endY:Float, tLine:View):String {
-        Log.d("JumpBtnClass","[moveTouchPoint] start")
+        //Log.d("JumpBtnClass","[moveTouchPoint] start")
 
         var tLineAngle = getDegree(endX, endY).toFloat()
         if(tLineAngle > 45) tLineAngle = 45F
@@ -40,14 +41,16 @@ class JumpBtnClass {
 
         tLine.rotation = tLineAngle
 
-        tLine.setSize((getLineHeight(endX, endY).toInt())*2)
+        if ((getLineHeight(endX, endY).toInt())*2 > MAXPOWERGAUGE) setSize(tLine, MAXPOWERGAUGE)
+        else setSize(tLine, getLineHeight(endX, endY).toInt()*2)
+
         var tLineY = startY - tLine.getHeight()/2
         tLine.setY(tLineY)
 
         return tLine.rotation.toString()
     }
     fun upTouchPoint(tPoint:View, tLine:View, x:Float, y:Float){
-        Log.d("JumpBtnClass","[upTouchPoint] start")
+        //Log.d("JumpBtnClass","[upTouchPoint] start")
 
         //Log.d("JumpBtnClass","[upTouchPoint] x = $x")
         //Log.d("JumpBtnClass","[upTouchPoint] y = $y")
@@ -69,33 +72,22 @@ class JumpBtnClass {
     }
 
     fun getLineHeight(endX:Float, endY:Float):Float{
-        Log.d("JumpBtnClass", "[getLineHeight] Start")
+        //Log.d("JumpBtnClass", "[getLineHeight] Start")
 
         var powWidth = (endX - startX).pow(2)
         var powHeight = (endY - startY).pow(2)
 
-        Log.d("JumpBtnClass", "[getLineHeight] LineHeight = ["+sqrt(powWidth+powHeight)+"]")
+        //Log.d("JumpBtnClass", "[getLineHeight] LineHeight = ["+sqrt(powWidth+powHeight)+"]")
 
         return (sqrt(powWidth+powHeight))
     }
 
-    fun View.setSize(dHeight: Int) {
-        Log.d("JumpBtnClass", "[setSize] Start")
-        //Log.d("JumpBtnClass", "[setSize] dHeight[$dHeight]")
+    fun setSize(v: View, height:Int){
+        val param: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        param.height = height
 
-        val lp = layoutParams
-
-        if(dHeight > MAXPOWERGAUGE){
-            lp?.let {
-                lp.height = MAXPOWERGAUGE
-                layoutParams = lp
-            }
-        }
-        else{
-            lp?.let {
-                lp.height = dHeight
-                layoutParams = lp
-            }
-        }
+        v.layoutParams = param
     }
 }

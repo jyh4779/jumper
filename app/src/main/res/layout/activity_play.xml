@@ -18,13 +18,13 @@
         android:id="@+id/playLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/teal_700"
+        android:background="@color/white"
         tools:context=".PlayActivity">
 
         <ImageButton
             android:id="@+id/touchPoint"
             android:layout_width="15dp"
-            android:layout_height="44dp"
+            android:layout_height="15dp"
             android:background="@drawable/clickpoint"
             android:visibility="invisible"
             app:layout_constraintTop_toTopOf="parent"
@@ -35,8 +35,9 @@
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:background="@drawable/defaultzola"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <ImageView
             android:id="@+id/touchLine"
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
             android:textSize="28sp"
             android:textColor="@color/black"
-            android:visibility="visible"
+            android:visibility="gone"
             android:text="@{PlayData.testText}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

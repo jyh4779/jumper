@@ -1,22 +1,21 @@
 package kr.jyh.jumper
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
-import kr.jyh.jumper.databinding.ActivityPlayBinding
 
 class PlayActivity: AppCompatActivity(), View.OnTouchListener {
 
-    private lateinit var playBinding: ActivityPlayBinding
     private var touchPointWidth = 0
     private var touchPointHeight = 0
 
-    var jumpBtnClass = JumpBtnClass()
-    var zolaMotionClass = ZolaMotionClass()
+    val jumpBtnClass = JumpBtnClass()
+    val zolaMotionClass = ZolaMotionClass()
+    val wallClass = WallClass()
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -26,6 +25,8 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         playBinding = DataBindingUtil.setContentView(this,R.layout.activity_play)
 
         playBinding.playLayout.setOnTouchListener(this)
+
+        playContext = this
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -37,15 +38,21 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         getTouchPointSize()
 
         zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight-zolaHeight)
+        wallClass.wallCoroutine()
     }
 
     fun setZolaInit() {
         Log.d("PlayActivity", "[setZolaInit] Start")
 
-        layoutHeight = playBinding.playLayout.height.toFloat()
-        layoutWidth = playBinding.playLayout.width.toFloat()
+        val density = resources.displayMetrics.density
+
+        layoutHeight = playBinding.playLayout.height/density
+        layoutWidth = playBinding.playLayout.width/density
         zolaHeight = layoutHeight/10
         zolaWidth = layoutWidth/9
+        WALLWIDTHMIN = layoutWidth/5
+        WALLWIDTHMAX = layoutWidth/3
+
         val x = layoutWidth/2-zolaWidth/2
         val y = layoutHeight-zolaHeight
 
@@ -53,12 +60,16 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         Log.d("PlayActivity", "[setZolaInit] layoutWidth = $layoutWidth")
         Log.d("PlayActivity", "[setZolaInit] zolaHeight = $zolaHeight")
         Log.d("PlayActivity", "[setZolaInit] zolaWidth = $zolaWidth")
+        Log.d("PlayActivity", "[setZolaInit] WALLWIDTHMIN = $WALLWIDTHMIN")
+        Log.d("PlayActivity", "[setZolaInit] WALLWIDTHMAX = $WALLWIDTHMAX")
         Log.d("PlayActivity", "[setZolaInit] zolaX = $x")
         Log.d("PlayActivity", "[setZolaInit] zolaY = $y")
 
-        playBinding.zola.setSize(zolaHeight.toInt(), zolaWidth.toInt())
+        //playBinding.zola.layoutParams.width = zolaWidth.toInt()
+        //playBinding.zola.layoutParams.height = zolaHeight.toInt()
+        setSize(playBinding.zola, zolaWidth.toInt(), zolaHeight.toInt())
         playBinding.zola.setX(x)
-        playBinding.zola.setY(0F)
+        playBinding.zola.setY(y)
         //playBinding.zola.setY(y)
     }
 
@@ -70,17 +81,6 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
 
         Log.d("PlayActivity", "[getTouchPointSize] pointWidth = [$touchPointWidth]")
         Log.d("PlayActivity", "[getTouchPointSize] pointHeight = [$touchPointHeight]")
-    }
-
-    fun View.setSize(dHeight: Int, dWidth:Int) {
-        Log.d("PlayActivity", "[setSize] Start")
-
-        val lp = layoutParams
-        lp?.let {
-            lp.height = dHeight
-            lp.width = dWidth
-            layoutParams = lp
-        }
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -110,5 +110,15 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
             }
         }
         return true
+    }
+
+    fun setSize(v:View, width:Int, height:Int){
+        val param: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        param.height = height
+        param.width = width
+
+        v.layoutParams = param
     }
 }

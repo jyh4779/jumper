@@ -8,10 +8,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ZolaMotionClass {
-
-    fun setZolaPosition(zola:ImageView, power:Float, angle:Float){
-
-    }
     fun setZolaJumpMotion(zola: ImageView){
         zola.setImageResource(R.drawable.seatzola)
     }
@@ -21,8 +17,8 @@ class ZolaMotionClass {
     }
 
     fun getZolaAngle():Float{
-        Log.d("ZolaMotionClass", "[getJumpPower] fClickAngle[$fClickAngle]!!")
-        if(dZolaState == ZOLAJUMP) {
+        //Log.d("ZolaMotionClass", "[getJumpPower] fClickAngle[$fClickAngle]!!")
+        if(dZolaState == ZOLAJUMP || dZolaState == ZOLADROP) {
             if(fClickAngle == 0F) return 0F
             else if(fClickAngle >= 40F) return 19F
             else if(fClickAngle <= -40F) return -19F
@@ -47,14 +43,16 @@ class ZolaMotionClass {
     }
 
     fun getZolaPower():Float{
-        Log.d("ZolaMotionClass", "[getJumpPower] fClickPower[$fClickPower]!!")
+        //Log.d("ZolaMotionClass", "[getJumpPower] fClickPower[$fClickPower]!!")
         if(dZolaState == ZOLAJUMP) {
             if(fClickPower <= 0F) {
                 fClickPower = 0F
+                dZolaState = ZOLADROP
                 return 0F
             }
             else if(fClickPower <= 10F && fClickPower > 0F){
                 fClickPower = 0F
+                dZolaState = ZOLADROP
                 return 20F
             }
             else if(fClickPower <= 50F && fClickPower > 10F){
@@ -73,14 +71,21 @@ class ZolaMotionClass {
         CoroutineScope(Dispatchers.Main).launch {
             Log.d("ZolaMotionClass", "[setZolaXY] CoroutineScope Start!!")
             while(true){
-                if(dZolaState == ZOLAJUMP || dZolaState == ZOLADROP) zola.setY(getZolaGravity(zola.getY())-getZolaPower())
-                if(dZolaState == ZOLASTAY) zola.setY(getZolaGravity(zola.getY()))
+                Log.d("ZolaMotionClass", "[setZolaXY] ZOLASTATE[$dZolaState]")
 
+                // 캐릭터 Y축 이동
+                if(dZolaState == ZOLAJUMP || dZolaState == ZOLADROP) zola.setY(zola.getY() + GRAVITY_DOWN_SPEED - getZolaPower()) // 캐릭터 자유낙하
+                if(dZolaState == ZOLASTAY) zola.setY(zola.getY() + WALL_DOWN_SPEED) // 캐릭터 벽 밟는 중
+
+                // 캐릭터 X축 이동
                 if(dZolaState == ZOLAJUMP || dZolaState == ZOLADROP) zola.setX(zola.getX()+getZolaAngle())
 
+                // 캐릭터 Layout 끝 부딫힘
                 if(zola.getX() <= 0F || zola.getX()+zolaWidth >= layoutWidth) fClickAngle = -fClickAngle
 
-                if(zola.getY() > deathLine) break
+                // 캐릭터 바닥에 닿음
+                if(zola.getY() > deathLine) if(dZolaState != ZOLASTART) break
+
                 delay(DELAY)
             }
             dZolaState = ZOLADEATH
@@ -88,8 +93,8 @@ class ZolaMotionClass {
         }
     }
 
-    fun getZolaGravity(postY:Float):Float{
+    /*fun getZolaGravity(postY:Float):Float{
         if(dZolaState == ZOLASTAY) return postY+WALL_DOWN_SPEED
         return postY+GRAVITY_DOWN_SPEED
-    }
+    }*/
 }
