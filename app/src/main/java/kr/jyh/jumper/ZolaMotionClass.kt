@@ -1,7 +1,10 @@
 package kr.jyh.jumper
 
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -9,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class ZolaMotionClass {
     fun setZolaJumpMotion(zola: ImageView){
+        if(dZolaState==ZOLAJUMP || dZolaState==ZOLADEATH || dZolaState== ZOLADROP ) return
         zola.setImageResource(R.drawable.seatzola)
     }
 
@@ -71,10 +75,17 @@ class ZolaMotionClass {
         CoroutineScope(Dispatchers.Main).launch {
             Log.d("ZolaMotionClass", "[setZolaXY] CoroutineScope Start!!")
             while(true){
-                Log.d("ZolaMotionClass", "[setZolaXY] ZOLASTATE[$dZolaState]")
-
+                //Log.d("ZolaMotionClass", "[setZolaXY] ZOLASTATE[$dZolaState]")
+                if(LIFECYCLE == LIFECYCLE_PAUSE) {
+                    delay(DELAY)
+                    continue
+                }
                 // 캐릭터 Y축 이동
-                if(dZolaState == ZOLAJUMP || dZolaState == ZOLADROP) zola.setY(zola.getY() + GRAVITY_DOWN_SPEED - getZolaPower()) // 캐릭터 자유낙하
+                if(dZolaState == ZOLAJUMP || dZolaState == ZOLADROP) {
+                    var zolaXDistance = getZolaPower()
+                    zola.setY(zola.getY() + GRAVITY_DOWN_SPEED - zolaXDistance) // 캐릭터 자유낙하
+                    score += zolaXDistance.toInt()/10
+                }
                 if(dZolaState == ZOLASTAY) zola.setY(zola.getY() + WALL_DOWN_SPEED) // 캐릭터 벽 밟는 중
 
                 // 캐릭터 X축 이동
@@ -86,15 +97,17 @@ class ZolaMotionClass {
                 // 캐릭터 바닥에 닿음
                 if(zola.getY() > deathLine) if(dZolaState != ZOLASTART) break
 
+                // 캐릭터 머리 천장에 부딫힘
+                if(zola.getY() <= 0) break
+
+                playBinding.playData = PlayData(score.toString())
+
                 delay(DELAY)
             }
             dZolaState = ZOLADEATH
+            val playActivity = PlayActivity()
+            playActivity.callStopFragment()
             Log.d("ZolaMotionClass", "[setZolaXY] CoroutineScope End!!")
         }
     }
-
-    /*fun getZolaGravity(postY:Float):Float{
-        if(dZolaState == ZOLASTAY) return postY+WALL_DOWN_SPEED
-        return postY+GRAVITY_DOWN_SPEED
-    }*/
 }

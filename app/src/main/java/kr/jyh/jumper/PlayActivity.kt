@@ -1,5 +1,6 @@
 package kr.jyh.jumper
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -7,9 +8,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
 
 class PlayActivity: AppCompatActivity(), View.OnTouchListener {
-
     private var touchPointWidth = 0
     private var touchPointHeight = 0
 
@@ -21,10 +25,18 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         super.onCreate(savedInstanceState)
 
         Log.d("PlayActivity", "[onCreate] Start")
+        LIFECYCLE = LIFECYCLE_FIRST
+        dZolaState = ZOLASTART
+        score = 0
 
         playBinding = DataBindingUtil.setContentView(this,R.layout.activity_play)
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout,StopFragment())
+            .commit()
+
         playBinding.playLayout.setOnTouchListener(this)
+
 
         playContext = this
     }
@@ -33,25 +45,37 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         super.onWindowFocusChanged(hasFocus)
 
         Log.d("PlayActivity", "[onWindowFocusChanged] Start")
+        Log.d("PlayActivity", "[onWindowFocusChanged] [$LIFECYCLE]")
+
+
+        if(LIFECYCLE != LIFECYCLE_FIRST) return
 
         setZolaInit()
         getTouchPointSize()
 
         zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight-zolaHeight)
+
         wallClass.wallCoroutine()
+
+        LIFECYCLE = LIFECYCLE_START
     }
 
     fun setZolaInit() {
         Log.d("PlayActivity", "[setZolaInit] Start")
 
-        val density = resources.displayMetrics.density
+        layoutHeight = playBinding.playLayout.height.toFloat()
+        layoutWidth = playBinding.playLayout.width.toFloat()
+        //layoutHeightDP = layoutHeight/ DENSITY
+        //layoutWidthDP = layoutWidth/ DENSITY
 
-        layoutHeight = playBinding.playLayout.height/density
-        layoutWidth = playBinding.playLayout.width/density
-        zolaHeight = layoutHeight/10
-        zolaWidth = layoutWidth/9
-        WALLWIDTHMIN = layoutWidth/5
-        WALLWIDTHMAX = layoutWidth/3
+        zolaHeight = layoutHeight/9
+        zolaWidth = zolaHeight/3
+        //zolaHeightDP = layoutHeightDP/7
+        //zolaWidthDP = layoutWidthDP/9
+
+        WALLWIDTHMIN = layoutWidth/WALLWIDTHMINRATE
+        WALLWIDTHMAX = layoutWidth/WALLWIDTHMAXRATE
+
 
         val x = layoutWidth/2-zolaWidth/2
         val y = layoutHeight-zolaHeight
@@ -70,6 +94,8 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         setSize(playBinding.zola, zolaWidth.toInt(), zolaHeight.toInt())
         playBinding.zola.setX(x)
         playBinding.zola.setY(y)
+        Log.d("PlayActivity", "[setZolaInit] zolaX = ["+playBinding.zola.getX()+"]")
+        Log.d("PlayActivity", "[setZolaInit] zolaY = ["+playBinding.zola.getY()+"]")
         //playBinding.zola.setY(y)
     }
 
@@ -84,6 +110,8 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
+        if(LIFECYCLE == LIFECYCLE_PAUSE && dZolaState != ZOLADEATH) return false
+
         var x = event.getX()
         var y = event.getY()
 
@@ -97,8 +125,9 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
             }
 
             MotionEvent.ACTION_MOVE -> {
+                //TextView to test
                 val text1 = jumpBtnClass.moveTouchPoint(x, y, playBinding.touchLine)
-                playBinding.playData = PlayData(text1)
+                //playBinding.playData = PlayData(text1)
 
                 zolaMotionClass.setZolaJumpMotion(playBinding.zola)
             }
@@ -113,12 +142,87 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
     }
 
     fun setSize(v:View, width:Int, height:Int){
-        val param: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT)
-        param.height = height
-        param.width = width
-
+        val param: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(width, height)
+        //param.height = height*DENSITY.toInt()
+        //param.width = width*DENSITY.toInt()
         v.layoutParams = param
     }
+
+    fun callStopFragment(){
+        if(dZolaState == ZOLADEATH) {
+            fragmentData = "게임 종료"
+            fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString())
+            //fragmentBinding.cancelBtn.setVisibility(View.GONE)
+        }
+        else {
+            fragmentData = "일시 정지"
+            fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString())
+        }
+        playBinding.frameLayout.setVisibility(View.VISIBLE)
+        playBinding.frameLayout.bringToFront()
+
+        LIFECYCLE = LIFECYCLE_PAUSE
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        if(LIFECYCLE != LIFECYCLE_PAUSE) callStopFragment()
+        else if(LIFECYCLE == LIFECYCLE_PAUSE && dZolaState != ZOLADEATH) setFragmentReturn("RESTART")
+        //Toast.makeText(this, "[onBackPressed] Push Cancel Button", Toast.LENGTH_SHORT).show()
+    }
+
+    fun setFragmentReturn(ret:String){
+        when(ret){
+            "OK" -> {
+                wallJob?.cancel()
+                finish()
+            }
+            "CANCEL" -> {
+                LIFECYCLE = LIFECYCLE_FIRST
+                wallJob?.cancel()
+                val intent = Intent(this, PlayActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            "RESTART" -> {
+                LIFECYCLE = LIFECYCLE_START
+                playBinding.frameLayout.setVisibility(View.GONE)
+            }
+        }
+    }
+
+    override fun onStart() {
+        Log.d("PlayActivity", "[onStart] start!!!!")
+        Log.d("PlayActivity", "[onStart] [$LIFECYCLE]")
+        if(LIFECYCLE != LIFECYCLE_FIRST) LIFECYCLE = LIFECYCLE_START
+        super.onStart()
+    }
+
+    override fun onResume() {
+        Log.d("PlayActivity", "[onResume] start!!!!")
+        Log.d("PlayActivity", "[onResume] [$LIFECYCLE]")
+        if(LIFECYCLE != LIFECYCLE_FIRST) LIFECYCLE = LIFECYCLE_START
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.d("PlayActivity", "[onPause] start!!!!")
+        Log.d("PlayActivity", "[onPause] [$LIFECYCLE]")
+        if(LIFECYCLE != LIFECYCLE_FIRST) LIFECYCLE = LIFECYCLE_PAUSE
+        super.onPause()
+    }
+
+    /*override fun onStop() {
+        Log.d("PlayActivity", "[onStop] start!!!!")
+        Log.d("PlayActivity", "[onStop] [$LIFECYCLE]")
+        if(LIFECYCLE != LIFECYCLE_FIRST) LIFECYCLE = LIFECYCLE_PAUSE
+        super.onStop()
+    }*/
+
+    /*override fun onRestart() {
+        Log.d("PlayActivity", "[onRestart] start!!!!")
+        Log.d("PlayActivity", "[onRestart] [$LIFECYCLE]")
+        if(LIFECYCLE != LIFECYCLE_FIRST) LIFECYCLE = LIFECYCLE_START
+        super.onRestart()
+    }*/
 }

@@ -1,5 +1,6 @@
 package kr.jyh.jumper
 
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -12,9 +13,13 @@ import kotlinx.coroutines.launch
 
 class WallClass:AppCompatActivity() {
     fun wallCoroutine(){
-        CoroutineScope(Dispatchers.Main).launch {
+        wallJob=CoroutineScope(Dispatchers.Main).launch {
             Log.d("WallClass", "[wallCoroutine] CoroutineScope Start!!")
             while(true){
+                if(LIFECYCLE == LIFECYCLE_PAUSE) {
+                    delay(DELAY)
+                    continue
+                }
                 if(dZolaState == ZOLADEATH) break
 
                 setWallGravity(makeWall())
@@ -27,31 +32,36 @@ class WallClass:AppCompatActivity() {
 
     fun setWallGravity(wall:ImageView){
         CoroutineScope(Dispatchers.Main).launch {
-            Log.d("WallClass", "[setWallGravity] CoroutineScope Start!!")
+            //Log.d("WallClass", "[setWallGravity] CoroutineScope Start!!")
             while(true){
+                if(LIFECYCLE == LIFECYCLE_PAUSE) {
+                    delay(DELAY)
+                    continue
+                }
                 if(wall.getY() > layoutHeight){
                     playBinding.playLayout.removeView(wall)
                     break
                 }
                 wall.setY(wall.getY()+WALL_DOWN_SPEED)
                 if(dZolaState == ZOLADROP) chkZolaOnWall(wall, playBinding.zola)
+                if(dZolaState == ZOLADEATH) break
                 delay(DELAY)
             }
         }
     }
 
     fun makeWall():ImageView {
-        Log.d("WallClass", "[makeWall] makeWall Start!!")
+        //Log.d("WallClass", "[makeWall] makeWall Start!!")
         var wallView = ImageView(playContext)
 
         var wallWidth = getRandomValue(WALLWIDTHMIN.toInt(), WALLWIDTHMAX.toInt())
         var wallX = getRandomValue(0, (layoutWidth-wallWidth).toInt()).toFloat()
 
-        Log.d("WallClass", "[makeWall] wallWidth [$wallWidth]")
-        Log.d("WallClass", "[makeWall] wallX [$wallX]")
+        //Log.d("WallClass", "[makeWall] wallWidth [$wallWidth]")
+        //Log.d("WallClass", "[makeWall] wallX [$wallX]")
 
 
-        wallView.setImageResource(R.drawable.wall)
+        wallView.setBackgroundColor(Color.GRAY)
         setSize(wallView, wallWidth, WALLHEIGHT)
         wallView.setX(wallX)
         wallView.setY(0F)

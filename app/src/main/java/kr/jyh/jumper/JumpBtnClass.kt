@@ -1,6 +1,5 @@
 package kr.jyh.jumper
 
-import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import java.lang.Math.atan2
@@ -18,6 +17,7 @@ class JumpBtnClass {
 
         //Log.d("JumpBtnClass","[downTouchPoint] TouchPointX = $touchPointX")
         //Log.d("JumpBtnClass","[downTouchPoint] TouchPointY = $touchPointY")
+        if(dZolaState==ZOLAJUMP || dZolaState==ZOLADEATH || dZolaState== ZOLADROP ) return
 
         tPoint.setX(touchPointX)
         tPoint.setY(touchPointY)
@@ -34,6 +34,8 @@ class JumpBtnClass {
     }
     fun moveTouchPoint(endX:Float, endY:Float, tLine:View):String {
         //Log.d("JumpBtnClass","[moveTouchPoint] start")
+
+        if(dZolaState==ZOLAJUMP || dZolaState==ZOLADEATH || dZolaState== ZOLADROP ) return "DEATH"
 
         var tLineAngle = getDegree(endX, endY).toFloat()
         if(tLineAngle > 45) tLineAngle = 45F
@@ -54,6 +56,8 @@ class JumpBtnClass {
 
         //Log.d("JumpBtnClass","[upTouchPoint] x = $x")
         //Log.d("JumpBtnClass","[upTouchPoint] y = $y")
+
+        if(dZolaState==ZOLAJUMP || dZolaState==ZOLADEATH || dZolaState== ZOLADROP ) return
 
         fClickPower = tLine.getHeight().toFloat()
         fClickAngle = tLine.rotation
