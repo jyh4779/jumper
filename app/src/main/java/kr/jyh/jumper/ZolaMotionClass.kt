@@ -1,23 +1,23 @@
 package kr.jyh.jumper
 
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ZolaMotionClass {
+    fun setZolaHeadBlood(){
+        playBinding.zola.setBackgroundResource(R.drawable.bloodzola)
+    }
     fun setZolaJumpMotion(zola: ImageView){
         if(dZolaState==ZOLAJUMP || dZolaState==ZOLADEATH || dZolaState== ZOLADROP ) return
-        zola.setImageResource(R.drawable.seatzola)
+        zola.setBackgroundResource(R.drawable.seatzola)
     }
 
     fun setZolaDefaultMotion(zola: ImageView){
-        zola.setImageResource(R.drawable.defaultzola)
+        zola.setBackgroundResource(R.drawable.defaultzola)
     }
 
     fun getZolaAngle():Float{
@@ -98,7 +98,10 @@ class ZolaMotionClass {
                 if(zola.getY() > deathLine) if(dZolaState != ZOLASTART) break
 
                 // 캐릭터 머리 천장에 부딫힘
-                if(zola.getY() <= 0) break
+                if(zola.getY() <= 0) {
+                    setZolaHeadBlood()
+                    break
+                }
 
                 playBinding.playData = PlayData(score.toString())
 

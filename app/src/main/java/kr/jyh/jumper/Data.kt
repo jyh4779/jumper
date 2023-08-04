@@ -39,8 +39,8 @@ var zolaWidth:Float = 0F
 
 var WALLWIDTHMIN:Float = 0F
 var WALLWIDTHMAX:Float = 0F
-var WALLWIDTHMINRATE:Int = 4
-var WALLWIDTHMAXRATE:Int = 2
+var WALLWIDTHMINRATE:Int = 5
+var WALLWIDTHMAXRATE:Int = 3
 const val WALLHEIGHT = 30
 
 const val MAXPOWERGAUGE:Int = 1000
