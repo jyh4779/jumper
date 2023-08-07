@@ -10,7 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kr.jyh.jumper.Room.JumpRoomDatabase
+import kr.jyh.jumper.Room.JumpRoomEntity
 import kr.jyh.jumper.databinding.FragmentStopBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -29,9 +34,8 @@ class StopFragment : Fragment(), View.OnClickListener {
 
         db = JumpRoomDatabase.getInstance(playContext)
 
-        var playerName = db!!.JumpRoomDao().getName()
-
-        fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString(), playerName)
+        //fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString(), playerName)
+        fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString())
 
         setBtnEventListener()
 
@@ -49,9 +53,7 @@ class StopFragment : Fragment(), View.OnClickListener {
         val pActivity = activity as PlayActivity
         when(v.id){
             R.id.okBtn -> {
-                val curDate = getDate()
-                Log.d("StopFragment","[onClick] getDate = [$curDate]")
-//                db!!.JumpRoomDao().insertScore()
+                saveDBData()
                 pActivity.setFragmentReturn("OK")
             }
             R.id.cancelBtn -> {
@@ -67,5 +69,12 @@ class StopFragment : Fragment(), View.OnClickListener {
     fun getDate():String {
         val curDate = LocalDateTime.now()
         return curDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd,HH:mm:ss"))
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun saveDBData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            db!!.JumpRoomDao().insertScore(JumpRoomEntity(getDate(), playerName?:"default", score))
+        }
     }
 }

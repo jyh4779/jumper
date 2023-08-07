@@ -5,10 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
-        <variable
-            name="MainData"
-            type="kr.jyh.jumper.MainData" />
     </data>
 
     <LinearLayout
@@ -31,13 +27,24 @@
             android:orientation="vertical"
             android:gravity="center|top">
 
+            <EditText
+                android:id="@+id/scoreET"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="50dp"
+                android:inputType="text"
+                android:textSize="23sp"
+                android:hint="이 름"/>
+
             <Button
                 android:id="@+id/startBtn"
                 android:layout_width="200dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="50dp"
-                android:text="@{MainData.mainText}"
-                android:textSize="@{MainData.mainTextSize}" />
+                android:layout_marginTop="20dp"
+                android:text="게임 시작"
+                android:textSize="28sp" />
+
 
         </LinearLayout>
 

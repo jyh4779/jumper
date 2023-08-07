@@ -22,6 +22,7 @@ const val LIFECYCLE_FIRST:Int = 2
 var LIFECYCLE:Int = LIFECYCLE_FIRST
 
 var score:Int = 0
+var playerName:String? = null
 
 var dZolaState:Int = -1
 var fClickPower:Float = 0F

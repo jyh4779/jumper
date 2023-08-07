@@ -23,13 +23,6 @@
                 android:paddingBottom="5dp"
                 android:textSize="23sp"
                 android:text="@{FragmentData.fragmentText}"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="5dp"
-                android:textSize="18sp"
-                android:text="@{FragmentData.scoreName}"/>
             <TextView
                 android:id="@+id/scoreText"
                 android:layout_width="match_parent"

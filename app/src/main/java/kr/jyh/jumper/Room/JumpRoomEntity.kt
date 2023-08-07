@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class JumpRoomEntity(
     @PrimaryKey
     val playDate: String,
-    val sPlayerName: String = "name",
+    val sPlayerName: String,
     val score: Int
 )

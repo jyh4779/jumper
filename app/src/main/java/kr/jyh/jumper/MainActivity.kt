@@ -5,10 +5,18 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.databinding.DataBindingUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kr.jyh.jumper.Room.JumpRoomDatabase
 import kr.jyh.jumper.databinding.ActivityMainBinding
 
 class MainActivity : ComponentActivity() {
     private lateinit var mainBinding: ActivityMainBinding
+
+    private var db: JumpRoomDatabase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,12 +25,28 @@ class MainActivity : ComponentActivity() {
 
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        val mainData = MainData("Start", 50)
+        db = JumpRoomDatabase.getInstance(this)
 
-        mainBinding.mainData = mainData
+        getLastPlayerName()
 
         mainBinding.startBtn.setOnClickListener {
+            playerName = mainBinding.scoreET.text.toString()
             startActivity(Intent(this,PlayActivity::class.java))
         }
+    }
+
+    fun getLastPlayerName() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val name = async { selectData() }
+            mainBinding.scoreET.setText(name.await())
+        }
+    }
+    fun selectData():String? {
+        var name:String? = null
+
+        name = db!!.JumpRoomDao().getName()
+        Log.d("MainActivity","[selectData] insert DB Data name[$name]" )
+
+        return name?:"이 름"
     }
 }

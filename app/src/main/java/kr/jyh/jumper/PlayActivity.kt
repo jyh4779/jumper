@@ -151,10 +151,12 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
     fun callStopFragment(){
         if(dZolaState == ZOLADEATH) {
             fragmentData = "게임 종료"
+            fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString())
             //fragmentBinding.cancelBtn.setVisibility(View.GONE)
         }
         else {
             fragmentData = "일시 정지"
+            fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString())
         }
         playBinding.frameLayout.setVisibility(View.VISIBLE)
         playBinding.frameLayout.bringToFront()
