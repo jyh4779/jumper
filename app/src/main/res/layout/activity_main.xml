@@ -45,6 +45,14 @@
                 android:text="게임 시작"
                 android:textSize="28sp" />
 
+            <Button
+                android:id="@+id/scoreBtn"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:text="기 록"
+                android:textSize="28sp" />
+
 
         </LinearLayout>
 

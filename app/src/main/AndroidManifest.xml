@@ -16,7 +16,8 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Jumper">
+            android:theme="@style/Theme.Jumper"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +25,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".PlayActivity"
-            android:theme="@style/Theme.Jumper"/>
+            android:theme="@style/Theme.Jumper"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ScoreBoardActivity"
+            android:theme="@style/Theme.Jumper"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

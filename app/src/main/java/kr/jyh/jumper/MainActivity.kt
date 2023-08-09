@@ -30,8 +30,11 @@ class MainActivity : ComponentActivity() {
         getLastPlayerName()
 
         mainBinding.startBtn.setOnClickListener {
-            playerName = mainBinding.scoreET.text.toString()
+            playerName = mainBinding.scoreET.text!!.toString()
             startActivity(Intent(this,PlayActivity::class.java))
+        }
+        mainBinding.scoreBtn.setOnClickListener {
+            startActivity(Intent(this,ScoreBoardActivity::class.java))
         }
     }
 
@@ -47,6 +50,6 @@ class MainActivity : ComponentActivity() {
         name = db!!.JumpRoomDao().getName()
         Log.d("MainActivity","[selectData] insert DB Data name[$name]" )
 
-        return name?:"이 름"
+        return name?:"no name"
     }
 }

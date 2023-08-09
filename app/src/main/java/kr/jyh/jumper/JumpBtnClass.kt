@@ -59,7 +59,7 @@ class JumpBtnClass {
 
         if(dZolaState==ZOLAJUMP || dZolaState==ZOLADEATH || dZolaState== ZOLADROP ) return
 
-        fClickPower = tLine.getHeight().toFloat()
+        fClickPower = tLine.getHeight().toFloat()/1.5F
         fClickAngle = tLine.rotation
 
         tPoint.setVisibility(View.INVISIBLE)

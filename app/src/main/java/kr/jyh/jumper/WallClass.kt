@@ -50,6 +50,10 @@ class WallClass:AppCompatActivity() {
         }
     }
 
+    fun setInitWallMake(){
+
+    }
+
     fun makeWall():ImageView {
         //Log.d("WallClass", "[makeWall] makeWall Start!!")
         var wallView = ImageView(playContext)
