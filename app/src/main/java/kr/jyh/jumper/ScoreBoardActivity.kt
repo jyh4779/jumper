@@ -9,11 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.jyh.jumper.Room.JumpRoomDatabase
 import kr.jyh.jumper.Room.JumpRoomEntity
-import kr.jyh.jumper.databinding.ActivityScoreboardBinding
 
 class ScoreBoardActivity: AppCompatActivity() {
     private var db: JumpRoomDatabase? = null
-    private var scoreboardBinding: ActivityScoreboardBinding? = null
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
@@ -22,6 +20,10 @@ class ScoreBoardActivity: AppCompatActivity() {
         scoreboardBinding = DataBindingUtil.setContentView(this,R.layout.activity_scoreboard)
 
         db = JumpRoomDatabase.getInstance(this)
+
+        scoreboardBinding.homeBtn.setOnClickListener{
+            finish()
+        }
     }
 
     override fun onStart() {

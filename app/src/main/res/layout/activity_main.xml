@@ -53,14 +53,36 @@
                 android:text="기 록"
                 android:textSize="28sp" />
 
+            <Button
+                android:id="@+id/testBtn"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:visibility="invisible"
+                android:text="게임 방법"
+                android:textSize="28sp" />
+
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="105dp"
-            android:src="@drawable/defaultzola"
-            android:layout_gravity="center"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="105dp">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="105dp"
+                android:src="@drawable/defaultzola"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="23sp"
+                android:text="@string/app_current_version"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </layout>

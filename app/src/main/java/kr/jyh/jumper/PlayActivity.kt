@@ -5,13 +5,28 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 
 class PlayActivity: AppCompatActivity(), View.OnTouchListener {
+    private var mRewardedAd: RewardedAd? = null
+
     private var touchPointWidth = 0
     private var touchPointHeight = 0
+
+    var rewardAdFlag = 0
 
     val jumpBtnClass = JumpBtnClass()
     val zolaMotionClass = ZolaMotionClass()
@@ -21,11 +36,17 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         super.onCreate(savedInstanceState)
 
         Log.d("PlayActivity", "[onCreate] Start")
+        playBinding = DataBindingUtil.setContentView(this,R.layout.activity_play)
+
+        MobileAds.initialize(this)
+        val adRequst = AdRequest.Builder().build()
+        playBinding.adBannerView.loadAd(adRequst)
+
         LIFECYCLE = LIFECYCLE_FIRST
         dZolaState = ZOLASTART
         score = 0
+        rewardAdFlag = 0
 
-        playBinding = DataBindingUtil.setContentView(this,R.layout.activity_play)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout,StopFragment())
@@ -33,8 +54,13 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
 
         playBinding.playLayout.setOnTouchListener(this)
 
-
         playContext = this
+
+        //rewarded ad initial
+        MobileAds.initialize(this) {
+                initializationStatus -> loadRewardAd()
+        }
+        setRewardedAdCallback()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -145,15 +171,14 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
     }
 
     fun callStopFragment(){
+        var replayBtnText = "다시하기"
         if(dZolaState == ZOLADEATH) {
             fragmentData = "게임 종료"
-            fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString())
-            //fragmentBinding.cancelBtn.setVisibility(View.GONE)
+            replayBtnText = "광고보고\n이어하기"
         }
-        else {
-            fragmentData = "일시 정지"
-            fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString())
-        }
+        else fragmentData = "일시 정지"
+
+        fragmentBinding.fragmentData = FragmentData(fragmentData, replayBtnText,score.toString())
         playBinding.frameLayout.setVisibility(View.VISIBLE)
         playBinding.frameLayout.bringToFront()
 
@@ -184,7 +209,56 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
                 LIFECYCLE = LIFECYCLE_START
                 playBinding.frameLayout.setVisibility(View.GONE)
             }
+            "ADSTART" -> {
+                mRewardedAd?.let { ad ->
+                    ad.show(this, OnUserEarnedRewardListener { rewardItem ->
+                        Log.d("PlayActivity", "[setFragmentReturn] User earned the reward[$rewardItem].")
+                        rewardAdFlag = 1
+                        playBinding.frameLayout.setVisibility(View.GONE)
+                        LIFECYCLE = LIFECYCLE_START
+                        dZolaState = ZOLASTART
+                        zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight-zolaHeight)
+                    })
+                } ?: run {
+                    Log.d("PlayActivity", "[setFragmentReturn] The rewarded ad wasn't ready yet.")
+                    Toast.makeText(playContext, "광고가 준비되지 않았습니다", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+    }
+
+    fun setRewardedAdCallback(){
+        mRewardedAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdClicked() {
+                // Called when a click is recorded for an ad.
+                Log.d("PlayActivity", "Ad was clicked.")
+            }
+            override fun onAdDismissedFullScreenContent() {
+                // Called when ad is dismissed.
+                // Set the ad reference to null so you don't show the ad a second time.
+                Log.d("PlayActivity", "Ad dismissed fullscreen content.")
+                mRewardedAd = null
+            }
+
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                // Called when ad fails to show.
+                Log.e("PlayActivity", "Ad failed to show fullscreen content.")
+                mRewardedAd = null
+            }
+            override fun onAdImpression() {
+                // Called when an impression is recorded for an ad.
+                Log.d("PlayActivity", "Ad recorded an impression.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                // Called when ad is shown.
+                Log.d("PlayActivity", "Ad showed fullscreen content.")
+            }
+        }
+    }
+
+    fun onRestartAfterAd(){
+
     }
 
     override fun onStart() {
@@ -206,6 +280,22 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         Log.d("PlayActivity", "[onPause] [$LIFECYCLE]")
         if(LIFECYCLE != LIFECYCLE_FIRST) LIFECYCLE = LIFECYCLE_PAUSE
         super.onPause()
+    }
+
+    private fun loadRewardAd() {
+        var adRequest = AdRequest.Builder().build()
+        RewardedAd.load(this, resources.getString(R.string.reward_ad_id),
+            adRequest, object : RewardedAdLoadCallback() {
+                override fun onAdLoaded(ad: RewardedAd) {
+                    Log.d("PlayActivity", "[loadRewardAd] Ad was loaded")
+                    mRewardedAd = ad
+                }
+
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d("PlayActivity", "[loadRewardAd] adError = [$adError]")
+                    mRewardedAd = null
+                }
+            })
     }
 
     /*override fun onStop() {

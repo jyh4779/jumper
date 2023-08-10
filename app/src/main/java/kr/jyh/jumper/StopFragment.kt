@@ -1,6 +1,7 @@
 package kr.jyh.jumper
 
 import android.app.Activity
+import android.media.tv.AdRequest
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -35,7 +38,7 @@ class StopFragment : Fragment(), View.OnClickListener {
         db = JumpRoomDatabase.getInstance(playContext)
 
         //fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString(), playerName)
-        fragmentBinding.fragmentData = FragmentData(fragmentData, score.toString())
+        fragmentBinding.fragmentData = FragmentData(fragmentData, "다시하기", score.toString())
 
         setBtnEventListener()
 
@@ -57,7 +60,8 @@ class StopFragment : Fragment(), View.OnClickListener {
                 pActivity.setFragmentReturn("OK")
             }
             R.id.cancelBtn -> {
-                pActivity.setFragmentReturn("CANCEL")
+                if(pActivity.rewardAdFlag == 0) pActivity.setFragmentReturn("ADSTART")
+                else pActivity.setFragmentReturn("CANCEL")
             }
             R.id.playLayout -> {
                 pActivity.setFragmentReturn("RESTART")

@@ -6,11 +6,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kr.jyh.jumper.databinding.ActivityPlayBinding
+import kr.jyh.jumper.databinding.ActivityScoreboardBinding
+import kr.jyh.jumper.databinding.ActivityStartBinding
 import kr.jyh.jumper.databinding.FragmentStopBinding
 
 lateinit var playBinding: ActivityPlayBinding
-
 lateinit var fragmentBinding: FragmentStopBinding
+lateinit var scoreboardBinding: ActivityScoreboardBinding
+lateinit var startBinding: ActivityStartBinding
 
 lateinit var playContext:Context
 lateinit var wallJob:Job

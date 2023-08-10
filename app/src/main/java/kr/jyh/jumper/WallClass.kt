@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 
 class WallClass:AppCompatActivity() {
     fun wallCoroutine(){
+        setInitWallMake()
         wallJob=CoroutineScope(Dispatchers.Main).launch {
             Log.d("WallClass", "[wallCoroutine] CoroutineScope Start!!")
             while(true){
@@ -22,7 +23,7 @@ class WallClass:AppCompatActivity() {
                 }
                 if(dZolaState == ZOLADEATH) break
 
-                setWallGravity(makeWall())
+                setWallGravity(makeWall(0F))
 
                 delay(WALLDELAY)
             }
@@ -51,10 +52,12 @@ class WallClass:AppCompatActivity() {
     }
 
     fun setInitWallMake(){
-
+        for(i in 1..5){
+            setWallGravity(makeWall(i*200F))
+        }
     }
 
-    fun makeWall():ImageView {
+    fun makeWall(wallY:Float):ImageView {
         //Log.d("WallClass", "[makeWall] makeWall Start!!")
         var wallView = ImageView(playContext)
 
@@ -68,7 +71,7 @@ class WallClass:AppCompatActivity() {
         wallView.setBackgroundColor(Color.GRAY)
         setSize(wallView, wallWidth, WALLHEIGHT)
         wallView.setX(wallX)
-        wallView.setY(0F)
+        wallView.setY(wallY)
         wallView.setVisibility(View.VISIBLE)
 
         playBinding.playLayout.addView(wallView)

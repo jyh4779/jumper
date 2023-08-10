@@ -7,7 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.databinding.DataBindingUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kr.jyh.jumper.Room.JumpRoomDatabase
@@ -37,6 +36,7 @@ class MainActivity : ComponentActivity() {
             startActivity(Intent(this,ScoreBoardActivity::class.java))
         }
     }
+
 
     fun getLastPlayerName() {
         CoroutineScope(Dispatchers.IO).launch {

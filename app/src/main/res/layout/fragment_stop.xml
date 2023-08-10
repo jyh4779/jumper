@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="18sp"
+                android:layout_marginBottom="8dp"
                 android:text="@{FragmentData.score}"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,16 +39,19 @@
                     android:id="@+id/okBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/gray"
+                    android:background="@color/halfblack"
+                    android:layout_gravity="center"
                     android:padding="5dp"
+                    android:layout_marginRight="8dp"
                     android:text="메인화면"/>
                 <Button
                     android:id="@+id/cancelBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/gray"
+                    android:background="@color/halfblack"
                     android:padding="5dp"
-                    android:text="다시하기"/>
+                    android:layout_marginLeft="8dp"
+                    android:text="@{FragmentData.isRewardAd}"/>
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
