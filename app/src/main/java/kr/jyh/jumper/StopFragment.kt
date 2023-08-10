@@ -60,7 +60,7 @@ class StopFragment : Fragment(), View.OnClickListener {
                 pActivity.setFragmentReturn("OK")
             }
             R.id.cancelBtn -> {
-                if(pActivity.rewardAdFlag == 0) pActivity.setFragmentReturn("ADSTART")
+                if(rewardAdFlag == 0) pActivity.setFragmentReturn("ADSTART")
                 else pActivity.setFragmentReturn("CANCEL")
             }
             R.id.playLayout -> {

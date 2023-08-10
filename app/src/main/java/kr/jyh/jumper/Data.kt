@@ -68,3 +68,5 @@ const val GRAVITY_DOWN_SPEED:Int = 20
 const val WALL_DOWN_SPEED:Int = 10
 
 var fragmentData:String = "일시 정지"
+
+var rewardAdFlag = 0

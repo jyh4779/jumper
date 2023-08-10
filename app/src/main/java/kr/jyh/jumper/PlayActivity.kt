@@ -26,8 +26,6 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
     private var touchPointWidth = 0
     private var touchPointHeight = 0
 
-    var rewardAdFlag = 0
-
     val jumpBtnClass = JumpBtnClass()
     val zolaMotionClass = ZolaMotionClass()
     val wallClass = WallClass()
@@ -68,7 +66,6 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
 
         Log.d("PlayActivity", "[onWindowFocusChanged] Start")
         Log.d("PlayActivity", "[onWindowFocusChanged] [$LIFECYCLE]")
-
 
         if(LIFECYCLE != LIFECYCLE_FIRST) return
 
@@ -174,7 +171,10 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         var replayBtnText = "다시하기"
         if(dZolaState == ZOLADEATH) {
             fragmentData = "게임 종료"
-            replayBtnText = "광고보고\n이어하기"
+            Log.d("PlayActivity", "[callStopFragment] rewardAdFlag[$rewardAdFlag].")
+
+            if(rewardAdFlag != 1) replayBtnText = "광고보고\n이어하기"
+            Log.d("PlayActivity", "[callStopFragment] replayBtnText[$replayBtnText].")
         }
         else fragmentData = "일시 정지"
 
@@ -214,6 +214,8 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
                     ad.show(this, OnUserEarnedRewardListener { rewardItem ->
                         Log.d("PlayActivity", "[setFragmentReturn] User earned the reward[$rewardItem].")
                         rewardAdFlag = 1
+                        Log.d("PlayActivity", "[setFragmentReturn] rewardAdFlag[$rewardAdFlag].")
+
                         playBinding.frameLayout.setVisibility(View.GONE)
                         LIFECYCLE = LIFECYCLE_START
                         dZolaState = ZOLASTART

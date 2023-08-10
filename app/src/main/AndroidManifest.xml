@@ -33,6 +33,9 @@
         <activity android:name=".ScoreBoardActivity"
             android:theme="@style/Theme.Jumper"
             android:screenOrientation="portrait"/>
+        <activity android:name=".HowToActivity"
+            android:theme="@style/Theme.Jumper"
+            android:screenOrientation="portrait"/>
         <!--sample ID = ca-app-pub-3940256099942544~3347511713 -->
         <!--real ID = ca-app-pub-1071237048211041~5373568104 -->
         <meta-data

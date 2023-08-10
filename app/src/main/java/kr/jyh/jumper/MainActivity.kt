@@ -35,6 +35,9 @@ class MainActivity : ComponentActivity() {
         mainBinding.scoreBtn.setOnClickListener {
             startActivity(Intent(this,ScoreBoardActivity::class.java))
         }
+        mainBinding.howToBtn.setOnClickListener {
+            startActivity(Intent(this,HowToActivity::class.java))
+        }
     }
 
 
