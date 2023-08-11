@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class WallClass:AppCompatActivity() {
     fun wallCoroutine(){
         setInitWallMake()
-        wallJob=CoroutineScope(Dispatchers.Main).launch {
+        wallJob =CoroutineScope(Dispatchers.Main).launch {
             Log.d("WallClass", "[wallCoroutine] CoroutineScope Start!!")
             while(true){
                 if(LIFECYCLE == LIFECYCLE_PAUSE) {
@@ -43,7 +43,7 @@ class WallClass:AppCompatActivity() {
                     playBinding.playLayout.removeView(wall)
                     break
                 }
-                wall.setY(wall.getY()+WALL_DOWN_SPEED)
+                wall.setY(wall.getY()+ WALL_DOWN_SPEED)
                 if(dZolaState == ZOLADROP) chkZolaOnWall(wall, playBinding.zola)
                 if(dZolaState == ZOLADEATH) break
                 delay(DELAY)
@@ -62,7 +62,7 @@ class WallClass:AppCompatActivity() {
         var wallView = ImageView(playContext)
 
         var wallWidth = getRandomValue(WALLWIDTHMIN.toInt(), WALLWIDTHMAX.toInt())
-        var wallX = getRandomValue(0, (layoutWidth-wallWidth).toInt()).toFloat()
+        var wallX = getRandomValue(0, (layoutWidth -wallWidth).toInt()).toFloat()
 
         //Log.d("WallClass", "[makeWall] wallWidth [$wallWidth]")
         //Log.d("WallClass", "[makeWall] wallX [$wallX]")
@@ -93,7 +93,7 @@ class WallClass:AppCompatActivity() {
     }
 
     fun chkZolaOnWall(wall:View, zola:View){
-        if(zola.getY()+zolaHeight >= wall.getY() && zola.getY()+zolaHeight <= wall.getY()+10) {
+        if(zola.getY()+ zolaHeight >= wall.getY() && zola.getY()+ zolaHeight <= wall.getY()+10) {
             if (wall.getX() > zola.getX() + zolaWidth) return
             if (wall.getX()+wall.getWidth() < zola.getX()) return
             dZolaState = ZOLASTAY

@@ -11,11 +11,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kr.jyh.jumper.databinding.FragmentHowToSetNameBinding
+import kr.jyh.jumper.databinding.FragmentHowToSetPlay2Binding
 
-class HowToSetNameFragment : Fragment() {
-    lateinit var binding: FragmentHowToSetNameBinding
+class HowToSetPlay2Fragment : Fragment() {
+
+    lateinit var binding: FragmentHowToSetPlay2Binding
     lateinit var howToActivity: HowToActivity
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,15 +25,18 @@ class HowToSetNameFragment : Fragment() {
 
         Log.d("HowToClass", "[onCreate] Start")
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_how_to_set_name, container, false
+            inflater, R.layout.fragment_how_to_set_play2, container, false
         )
 
         howToActivity = activity as HowToActivity
 
         swapGuideImage()
 
-        binding.nextpage.setOnClickListener{
+        binding.beforepage.setOnClickListener{
             howToActivity.changeFrament("PLAY")
+        }
+        binding.nextpage.setOnClickListener{
+            howToActivity.changeFrament("DEATH")
         }
 
         // Inflate the layout for this fragment
@@ -42,11 +47,15 @@ class HowToSetNameFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             while(true){
                 if (imageFlag == 0) {
-                    binding.startImage.setImageResource(R.drawable.start2)
+                    binding.startImage.setImageResource(R.drawable.afterjump2)
                     imageFlag = 1
                 }
                 else if (imageFlag == 1) {
-                    binding.startImage.setImageResource(R.drawable.start)
+                    binding.startImage.setImageResource(R.drawable.afterjump3)
+                    imageFlag = 2
+                }
+                else if (imageFlag == 2) {
+                    binding.startImage.setImageResource(R.drawable.afterjump)
                     imageFlag = 0
                 }
                 delay(500)

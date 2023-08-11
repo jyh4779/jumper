@@ -12,7 +12,7 @@ class ZolaMotionClass {
         playBinding.zola.setBackgroundResource(R.drawable.bloodzola)
     }
     fun setZolaJumpMotion(zola: ImageView){
-        if(dZolaState==ZOLAJUMP || dZolaState==ZOLADEATH || dZolaState== ZOLADROP ) return
+        if(dZolaState == ZOLAJUMP || dZolaState == ZOLADEATH || dZolaState == ZOLADROP ) return
         zola.setBackgroundResource(R.drawable.seatzola)
     }
 
@@ -92,7 +92,7 @@ class ZolaMotionClass {
                 if(dZolaState == ZOLAJUMP || dZolaState == ZOLADROP) zola.setX(zola.getX()+getZolaAngle())
 
                 // 캐릭터 Layout 끝 부딫힘
-                if(zola.getX() <= 0F || zola.getX()+zolaWidth >= layoutWidth) fClickAngle = -fClickAngle
+                if(zola.getX() <= 0F || zola.getX()+ zolaWidth >= layoutWidth) fClickAngle = -fClickAngle
 
                 // 캐릭터 바닥에 닿음
                 if(zola.getY() > deathLine) if(dZolaState != ZOLASTART) break

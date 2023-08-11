@@ -17,8 +17,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
-import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
+import kr.jyh.jumper.fragmentData
 
 class PlayActivity: AppCompatActivity(), View.OnTouchListener {
     private var mRewardedAd: RewardedAd? = null
@@ -34,7 +33,7 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         super.onCreate(savedInstanceState)
 
         Log.d("PlayActivity", "[onCreate] Start")
-        playBinding = DataBindingUtil.setContentView(this,R.layout.activity_play)
+        playBinding = DataBindingUtil.setContentView(this, R.layout.activity_play)
 
         MobileAds.initialize(this)
         val adRequst = AdRequest.Builder().build()
@@ -47,7 +46,7 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
 
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout,StopFragment())
+            .replace(R.id.frameLayout, StopFragment())
             .commit()
 
         playBinding.playLayout.setOnTouchListener(this)
@@ -72,7 +71,7 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         setZolaInit()
         getTouchPointSize()
 
-        zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight-zolaHeight)
+        zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight - zolaHeight)
 
         wallClass.wallCoroutine()
 
@@ -87,17 +86,17 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         //layoutHeightDP = layoutHeight/ DENSITY
         //layoutWidthDP = layoutWidth/ DENSITY
 
-        zolaHeight = layoutHeight/9
-        zolaWidth = zolaHeight/3
+        zolaHeight = layoutHeight /9
+        zolaWidth = zolaHeight /3
         //zolaHeightDP = layoutHeightDP/7
         //zolaWidthDP = layoutWidthDP/9
 
-        WALLWIDTHMIN = layoutWidth/WALLWIDTHMINRATE
-        WALLWIDTHMAX = layoutWidth/WALLWIDTHMAXRATE
+        WALLWIDTHMIN = layoutWidth / WALLWIDTHMINRATE
+        WALLWIDTHMAX = layoutWidth / WALLWIDTHMAXRATE
 
 
-        val x = layoutWidth/2-zolaWidth/2
-        val y = layoutHeight-zolaHeight
+        val x = layoutWidth /2- zolaWidth /2
+        val y = layoutHeight - zolaHeight
 
         Log.d("PlayActivity", "[setZolaInit] layoutHeight = $layoutHeight")
         Log.d("PlayActivity", "[setZolaInit] layoutWidth = $layoutWidth")
@@ -113,8 +112,8 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         setSize(playBinding.zola, zolaWidth.toInt(), zolaHeight.toInt())
         playBinding.zola.setX(x)
         playBinding.zola.setY(y)
-        Log.d("PlayActivity", "[setZolaInit] zolaX = ["+playBinding.zola.getX()+"]")
-        Log.d("PlayActivity", "[setZolaInit] zolaY = ["+playBinding.zola.getY()+"]")
+        Log.d("PlayActivity", "[setZolaInit] zolaX = ["+ playBinding.zola.getX()+"]")
+        Log.d("PlayActivity", "[setZolaInit] zolaY = ["+ playBinding.zola.getY()+"]")
         //playBinding.zola.setY(y)
     }
 
@@ -178,7 +177,7 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         }
         else fragmentData = "일시 정지"
 
-        fragmentBinding.fragmentData = FragmentData(fragmentData, replayBtnText,score.toString())
+        fragmentBinding.fragmentData = FragmentData(fragmentData, replayBtnText, score.toString())
         playBinding.frameLayout.setVisibility(View.VISIBLE)
         playBinding.frameLayout.bringToFront()
 
@@ -217,9 +216,11 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
                         Log.d("PlayActivity", "[setFragmentReturn] rewardAdFlag[$rewardAdFlag].")
 
                         playBinding.frameLayout.setVisibility(View.GONE)
+                        playBinding.zola.setY(layoutHeight - zolaHeight)
+                        zolaMotionClass.setZolaDefaultMotion(playBinding.zola)
                         LIFECYCLE = LIFECYCLE_START
                         dZolaState = ZOLASTART
-                        zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight-zolaHeight)
+                        zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight - zolaHeight)
                     })
                 } ?: run {
                     Log.d("PlayActivity", "[setFragmentReturn] The rewarded ad wasn't ready yet.")

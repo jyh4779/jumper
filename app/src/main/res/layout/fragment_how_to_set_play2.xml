@@ -8,14 +8,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".HowToSetNameFragment">
+        tools:context=".HowToSetPlay2Fragment">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6"/>
+                android:layout_weight="5"/>
+            <Button
+                android:id="@+id/beforepage"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@drawable/beforepage"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -23,7 +30,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="28sp"
-                android:text="1/4"/>
+                android:text="3/4"/>
 
             <Button
                 android:id="@+id/nextpage"
@@ -42,14 +49,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/start"/>
+            android:background="@drawable/afterjump"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
             android:padding="20dp"
             android:textSize="18sp"
-            android:text="이름을 넣고 게임을 시작합니다.\n이 이름은 게임 기록에 남습니다."/>
+            android:text="좌,우측 벽에 부딫치면\n반대 방향으로 튕겨집니다."/>
 
     </LinearLayout>
 </layout>

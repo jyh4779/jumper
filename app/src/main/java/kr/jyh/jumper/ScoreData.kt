@@ -1,34 +1,4 @@
 package kr.jyh.jumper
 
-data class ScoreData(
-    var name1:String =" ",
-    var score1:String =" ",
-    var time1:String =" ",
-    var name2:String =" ",
-    var score2:String =" ",
-    var time2:String =" ",
-    var name3:String =" ",
-    var score3:String =" ",
-    var time3:String =" ",
-    var name4:String =" ",
-    var score4:String =" ",
-    var time4:String =" ",
-    var name5:String =" ",
-    var score5:String =" ",
-    var time5:String =" ",
-    var name6:String =" ",
-    var score6:String =" ",
-    var time6:String =" ",
-    var name7:String =" ",
-    var score7:String =" ",
-    var time7:String =" ",
-    var name8:String =" ",
-    var score8:String =" ",
-    var time8:String =" ",
-    var name9:String =" ",
-    var score9:String =" ",
-    var time9:String =" ",
-    var name10:String =" ",
-    var score10:String =" ",
-    var time10:String =" "
-)
+class ScoreData {
+}

@@ -5,6 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+
 import kr.jyh.jumper.databinding.ActivityPlayBinding
 import kr.jyh.jumper.databinding.ActivityScoreboardBinding
 import kr.jyh.jumper.databinding.ActivityStartBinding

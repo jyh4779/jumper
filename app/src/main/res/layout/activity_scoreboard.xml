@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <import type="android.view.View"/>
-        <variable
-            name="ScoreData"
-            type="kr.jyh.jumper.ScoreData" />
     </data>
 
     <LinearLayout
@@ -98,32 +94,32 @@
                         android:background="@drawable/score11"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name1}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score1}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time1}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -135,32 +131,32 @@
                         android:background="@drawable/score21"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name2}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score2}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time2}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -172,32 +168,32 @@
                         android:background="@drawable/score31"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name3"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name3}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score3"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score3}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time3"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time3}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -210,32 +206,32 @@
                         android:background="@drawable/score4"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name4"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name4}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score4"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score4}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time4"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time4}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -248,32 +244,32 @@
                         android:background="@drawable/score5"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name5"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name5}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score5"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score5}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time5"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time5}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -286,32 +282,32 @@
                         android:background="@drawable/score6"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name6"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name6}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score6"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score6}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time6"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time6}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -324,32 +320,32 @@
                         android:background="@drawable/score7"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name7"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name7}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score7"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score7}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time7"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time7}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -362,32 +358,32 @@
                         android:background="@drawable/score8"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name8"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name8}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score8"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score8}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time8"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time8}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -400,32 +396,32 @@
                         android:background="@drawable/score9"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name9"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name9}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score9"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score9}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time9"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time9}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -438,32 +434,32 @@
                         android:background="@drawable/score10"
                         android:layout_margin="1dp"/>
                     <TextView
+                        android:id="@+id/name10"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.name10}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/score10"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="23sp"
-                        android:text="@{ScoreData.score10}"/>
+                        android:textSize="23sp"/>
                     <TextView
+                        android:id="@+id/time10"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:background="@drawable/scorebackcolor"
                         android:layout_margin="1dp"
-                        android:textSize="18sp"
-                        android:text="@{ScoreData.time10}"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
             </LinearLayout>
             </ScrollView>

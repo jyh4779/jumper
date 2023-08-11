@@ -36,29 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <Button
-                    android:id="@+id/beforepage"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:background="@drawable/beforepage"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="3"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textSize="28sp"
-                    android:text="1/4"/>
 
-                <Button
-                    android:id="@+id/nextpage"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:background="@drawable/nextpage"/>
             </LinearLayout>
         </LinearLayout>
         <androidx.fragment.app.FragmentContainerView

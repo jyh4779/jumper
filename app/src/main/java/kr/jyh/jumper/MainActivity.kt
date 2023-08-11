@@ -30,13 +30,13 @@ class MainActivity : ComponentActivity() {
 
         mainBinding.startBtn.setOnClickListener {
             playerName = mainBinding.scoreET.text!!.toString()
-            startActivity(Intent(this,PlayActivity::class.java))
+            startActivity(Intent(this, PlayActivity::class.java))
         }
         mainBinding.scoreBtn.setOnClickListener {
             startActivity(Intent(this,ScoreBoardActivity::class.java))
         }
         mainBinding.howToBtn.setOnClickListener {
-            startActivity(Intent(this,HowToActivity::class.java))
+            startActivity(Intent(this, HowToActivity::class.java))
         }
     }
 
