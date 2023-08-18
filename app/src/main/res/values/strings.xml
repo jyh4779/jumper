@@ -6,5 +6,5 @@
     <string name="reward_ad_testid">ca-app-pub-3940256099942544/5224354917</string>
     <string name="banner_ad_id">ca-app-pub-1071237048211041/3815006050</string>
     <string name="reward_ad_id">ca-app-pub-1071237048211041/5687061749</string>
-    <string name="app_current_version">1.0.4</string>
+    <string name="app_current_version">1.0.5</string>
 </resources>

@@ -43,6 +43,8 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         dZolaState = ZOLASTART
         score = 0
         rewardAdFlag = 0
+        remainWallCnt = 0
+        lastWallId = 0
 
 
         supportFragmentManager.beginTransaction()
@@ -195,11 +197,15 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         when(ret){
             "OK" -> {
                 wallJob?.cancel()
+                Log.d("PlayActivity","[setFragmentReturn] RemainWall[$remainWallCnt], LastId[$lastWallId]")
+                //wallClass.removeRemainAllWall()
                 finish()
             }
             "CANCEL" -> {
                 LIFECYCLE = LIFECYCLE_FIRST
                 wallJob?.cancel()
+                Log.d("PlayActivity","[setFragmentReturn] RemainWall[$remainWallCnt], LastId[$lastWallId]")
+                //wallClass.removeRemainAllWall()
                 val intent = Intent(this, PlayActivity::class.java)
                 startActivity(intent)
                 finish()

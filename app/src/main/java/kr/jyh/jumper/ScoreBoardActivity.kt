@@ -10,6 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.jyh.jumper.Room.JumpRoomDatabase
 import kr.jyh.jumper.Room.JumpRoomEntity
+import kr.jyh.jumper.Socket.SELECT_WORLD_RECORD
+import kr.jyh.jumper.Socket.SocketClientClass
 
 class ScoreBoardActivity: AppCompatActivity() {
     private var db: JumpRoomDatabase? = null
@@ -24,6 +26,10 @@ class ScoreBoardActivity: AppCompatActivity() {
 
         scoreboardBinding.homeBtn.setOnClickListener{
             finish()
+        }
+        scoreboardBinding.testBtn.setOnClickListener{
+            var test = SocketClientClass()
+            test.selectWolrdRecord()
         }
     }
 

@@ -1,10 +1,7 @@
 package kr.jyh.jumper
 
 import android.content.Context
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 import kr.jyh.jumper.databinding.ActivityPlayBinding
 import kr.jyh.jumper.databinding.ActivityScoreboardBinding
@@ -71,3 +68,6 @@ const val WALL_DOWN_SPEED:Int = 10
 var fragmentData:String = "일시 정지"
 
 var rewardAdFlag = 0
+
+var lastWallId:Int = 0
+var remainWallCnt:Int = 0
