@@ -1,10 +1,15 @@
 package kr.jyh.jumper
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -20,13 +25,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.d("MainActivity", "onCreate Start")
+        Log.d("MainActivity", "[onCreate] Start")
+        //Log.d("MainActivity", "[onCreate] UID = [$UID]")
+
 
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        db = JumpRoomDatabase.getInstance(this)
+        //db = JumpRoomDatabase.getInstance(this)
 
-        getLastPlayerName()
+        //getLastPlayerName()
+
 
         mainBinding.startBtn.setOnClickListener {
             playerName = mainBinding.scoreET.text!!.toString()
@@ -38,13 +46,25 @@ class MainActivity : ComponentActivity() {
         mainBinding.howToBtn.setOnClickListener {
             startActivity(Intent(this, HowToActivity::class.java))
         }
+        mainBinding.logoutBtn.setOnClickListener {
+            var auth: FirebaseAuth = Firebase.auth
+            auth.signOut()
+            mainBinding.logoutLayout.setVisibility(View.VISIBLE)
+
+            mainBinding.exitBtn.setOnClickListener {
+                System.exit(0)
+            }
+        }
     }
 
 
-    fun getLastPlayerName() {
+    /*fun getLastPlayerName() {
         CoroutineScope(Dispatchers.IO).launch {
             val name = async { selectData() }
-            mainBinding.scoreET.setText(name.await())
+            val a = name.await()
+            runOnUiThread{
+                mainBinding.scoreET.setText(a)
+            }
         }
     }
     fun selectData():String? {
@@ -54,5 +74,5 @@ class MainActivity : ComponentActivity() {
         Log.d("MainActivity","[selectData] insert DB Data name[$name]" )
 
         return name?:"no name"
-    }
+    }*/
 }

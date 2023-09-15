@@ -19,6 +19,15 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/signBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
         <LinearLayout
             android:id="@+id/updateLayout"
             android:layout_width="wrap_content"

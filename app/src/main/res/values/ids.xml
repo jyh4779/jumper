@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO: Replace this entire file with the ids.xml provided from the Google Play Console.
+         NOTE: You can find this file by clicking the `Get Resources` link in
+         the Events, Achievements, or Leaderboards menu of the Google Play Console. -->
+    <string name="app_id">187517245179</string>
+
+    <string name="achievement_prime">CgkI-62Yx7oFEAIQAA</string>
+    <string name="achievement_really_bored">CgkI-62Yx7oFEAIQBA</string>
+    <string name="achievement_bored">CgkI-62Yx7oFEAIQAw</string>
+    <string name="achievement_humble">CgkI-62Yx7oFEAIQAQ</string>
+    <string name="achievement_leet">CgkI-62Yx7oFEAIQAg</string>
+
+    <string name="leaderboard_easy">CgkI-62Yx7oFEAIQBQ</string>
+    <string name="leaderboard_hard">YOUR_LEADERBOARD_HARD_ID</string>
+
+    <string name="event_start">YOUR_EVENT_START</string>
+    <string name="event_number_chosen">YOUR_EVENT_NUMBER_CHOSEN</string>
+</resources>

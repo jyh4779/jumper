@@ -6,82 +6,128 @@
 
     <data>
     </data>
-
-    <LinearLayout
-        android:id="@+id/mainLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:background="@drawable/mainbackground" />
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center|top">
+            tools:context=".MainActivity">
 
-            <EditText
-                android:id="@+id/scoreET"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="50dp"
-                android:inputType="text"
-                android:textSize="23sp"
-                android:hint="이 름"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:background="@drawable/mainbackground" />
 
-            <Button
-                android:id="@+id/startBtn"
-                android:layout_width="200dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="20dp"
-                android:text="게임 시작"
-                android:textSize="28sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="vertical"
+                android:gravity="center|top">
 
-            <Button
-                android:id="@+id/scoreBtn"
-                android:layout_width="200dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="20dp"
-                android:text="기 록"
-                android:textSize="28sp" />
+                <EditText
+                    android:id="@+id/scoreET"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="50dp"
+                    android:inputType="text"
+                    android:textSize="23sp"
+                    android:hint="이 름"
+                    android:visibility="gone"/>
 
-            <Button
-                android:id="@+id/howToBtn"
-                android:layout_width="200dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="20dp"
-                android:text="게임 방법"
-                android:textSize="28sp" />
+                <Button
+                    android:id="@+id/startBtn"
+                    android:layout_width="200dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:text="게임 시작"
+                    android:textSize="28sp" />
 
+                <Button
+                    android:id="@+id/scoreBtn"
+                    android:layout_width="200dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:text="기 록"
+                    android:textSize="28sp" />
+
+                <Button
+                    android:id="@+id/howToBtn"
+                    android:layout_width="200dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:text="게임 방법"
+                    android:textSize="28sp" />
+
+                <Button
+                    android:id="@+id/logoutBtn"
+                    android:layout_width="200dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:text="로그아웃"
+                    android:textSize="28sp" />
+
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="105dp">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="105dp"
+                    android:src="@drawable/defaultzola"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="23sp"
+                    android:text="@string/app_current_version"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="105dp">
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="105dp"
-                android:src="@drawable/defaultzola"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+        <LinearLayout
+            android:id="@+id/logoutLayout"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:visibility="gone"
+            android:background="@color/gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="vertical">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:text="@string/app_current_version"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="로그아웃 되었습니다.\n 확인 버튼을 누르시면 게임이 종료됩니다."/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/exitBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="확인"/>
+            </LinearLayout>
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

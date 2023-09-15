@@ -62,7 +62,7 @@ class StopFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    /*@RequiresApi(Build.VERSION_CODES.O)
     fun getDate():String {
         val curDate = LocalDateTime.now()
         return curDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd,HH:mm:ss"))
@@ -73,5 +73,9 @@ class StopFragment : Fragment(), View.OnClickListener {
         CoroutineScope(Dispatchers.IO).launch {
             db!!.JumpRoomDao().insertScore(JumpRoomEntity(getDate(), playerName ?:"default", score))
         }
+    }*/
+
+    fun saveDBData() {
+
     }
 }

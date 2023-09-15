@@ -71,3 +71,5 @@ var rewardAdFlag = 0
 
 var lastWallId:Int = 0
 var remainWallCnt:Int = 0
+
+lateinit var UID:String

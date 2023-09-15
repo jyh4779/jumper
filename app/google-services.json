@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "187517245179",
+    "project_id": "jjump-44470851",
+    "storage_bucket": "jjump-44470851.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187517245179:android:8778007efebb817699825e",
+        "android_client_info": {
+          "package_name": "kr.jyh.jumper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "187517245179-ss7go8gees92i1jcrkjnrjmns2cgknap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.jyh.jumper",
+            "certificate_hash": "a34c7d9292e5a59697f9fb8bb299955005d7a492"
+          }
+        },
+        {
+          "client_id": "187517245179-dj2o1orlebset52vqvd7rbqtjhckdnib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPWKZtaLQGnoHer-VW8BqHY9FJ84BQCrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "187517245179-dj2o1orlebset52vqvd7rbqtjhckdnib.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
