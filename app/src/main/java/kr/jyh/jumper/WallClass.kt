@@ -11,10 +11,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kr.jyh.jumper.databinding.ActivityPlayBinding
 
 class WallClass:AppCompatActivity() {
-    fun wallCoroutine(){
-        setInitWallMake()
+    fun wallCoroutine(playBinding: ActivityPlayBinding){
+        setInitWallMake(playBinding)
         wallJob =CoroutineScope(Dispatchers.Main).launch {
             Log.d("WallClass", "[wallCoroutine] CoroutineScope Start!!")
             while(true){
@@ -24,7 +25,7 @@ class WallClass:AppCompatActivity() {
                 }
                 if(dZolaState == ZOLADEATH) break
 
-                setWallGravity(makeWall(0F))
+                setWallGravity(makeWall(0F,playBinding),playBinding)
 
                 delay(WALLDELAY)
             }
@@ -32,7 +33,7 @@ class WallClass:AppCompatActivity() {
         }
     }
 
-    fun setWallGravity(wall:ImageView){
+    fun setWallGravity(wall:ImageView, playBinding: ActivityPlayBinding){
         CoroutineScope(Dispatchers.Main).launch {
             //Log.d("WallClass", "[setWallGravity] CoroutineScope Start!!")
             while(true){
@@ -42,6 +43,7 @@ class WallClass:AppCompatActivity() {
                 }
                 if(wall.getY() > layoutHeight){
                     playBinding.playLayout.removeView(wall)
+                    WALL_DOWN_SPEED = 10
                     remainWallCnt--
                     Log.d("WallClass","[makeWall] RemainWall[$remainWallCnt]")
                     break
@@ -54,13 +56,13 @@ class WallClass:AppCompatActivity() {
         }
     }
 
-    fun setInitWallMake(){
+    fun setInitWallMake(playBinding: ActivityPlayBinding){
         for(i in 1..5){
-            setWallGravity(makeWall(i*200F))
+            setWallGravity(makeWall(i*200F,playBinding),playBinding)
         }
     }
 
-    fun makeWall(wallY:Float):ImageView {
+    fun makeWall(wallY:Float,playBinding: ActivityPlayBinding):ImageView {
         //Log.d("WallClass", "[makeWall] makeWall Start!!")
         var wallView = ImageView(playContext)
 
@@ -76,14 +78,14 @@ class WallClass:AppCompatActivity() {
         wallView.setX(wallX)
         wallView.setY(wallY)
         wallView.setVisibility(View.VISIBLE)
-        wallView.id = ViewCompat.generateViewId()
-        lastWallId = wallView.getId()
-        Log.d("WallClass","[makeWall] ID[$lastWallId] wallX[$wallX] Width[$wallWidth]")
+        //wallView.id = ViewCompat.generateViewId()
+        //lastWallId = wallView.getId()
+        //Log.d("WallClass","[makeWall] ID[$lastWallId] wallX[$wallX] Width[$wallWidth]")
 
         playBinding.playLayout.addView(wallView)
 
-        remainWallCnt++
-        Log.d("WallClass","[makeWall] RemainWall[$remainWallCnt]")
+        /*remainWallCnt++
+        Log.d("WallClass","[makeWall] RemainWall[$remainWallCnt]")*/
 
         return wallView
     }
@@ -102,8 +104,8 @@ class WallClass:AppCompatActivity() {
     }
 
     fun chkZolaOnWall(wall:View, zola:View){
-        var id = wall.getId()
-        if(id < (lastWallId- remainWallCnt)) return
+        /*var id = wall.getId()
+        if(id < (lastWallId- remainWallCnt)) return*/
         if(zola.getY()+ zolaHeight >= wall.getY() && zola.getY()+ zolaHeight <= wall.getY()+10) {
             if (wall.getX() > zola.getX() + zolaWidth) return
             if (wall.getX()+wall.getWidth() < zola.getX()) return

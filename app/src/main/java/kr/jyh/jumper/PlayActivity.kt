@@ -17,10 +17,12 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import kr.jyh.jumper.databinding.ActivityPlayBinding
 import kr.jyh.jumper.fragmentData
 
 class PlayActivity: AppCompatActivity(), View.OnTouchListener {
     private var mRewardedAd: RewardedAd? = null
+    lateinit var playBinding: ActivityPlayBinding
 
     private var touchPointWidth = 0
     private var touchPointHeight = 0
@@ -29,11 +31,15 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
     val zolaMotionClass = ZolaMotionClass()
     val wallClass = WallClass()
 
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
         Log.d("PlayActivity", "[onCreate] Start")
         playBinding = DataBindingUtil.setContentView(this, R.layout.activity_play)
+
+        if (FIRST_START == 0 ) FIRST_START = 1
+        else WALL_DOWN_SPEED = 5000
 
         MobileAds.initialize(this)
         val adRequst = AdRequest.Builder().build()
@@ -73,9 +79,9 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         setZolaInit()
         getTouchPointSize()
 
-        zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight - zolaHeight)
+        zolaMotionClass.setZolaXY(playBinding, playBinding.zola, layoutHeight - zolaHeight)
 
-        wallClass.wallCoroutine()
+        wallClass.wallCoroutine(playBinding)
 
         LIFECYCLE = LIFECYCLE_START
     }
@@ -168,7 +174,7 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
         v.layoutParams = param
     }
 
-    fun callStopFragment(){
+    fun callStopFragment(playBinding: ActivityPlayBinding){
         var replayBtnText = "다시하기"
         if(dZolaState == ZOLADEATH) {
             fragmentData = "게임 종료"
@@ -188,7 +194,7 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
 
     override fun onBackPressed() {
         //super.onBackPressed()
-        if(LIFECYCLE != LIFECYCLE_PAUSE) callStopFragment()
+        if(LIFECYCLE != LIFECYCLE_PAUSE) callStopFragment(playBinding)
         else if(LIFECYCLE == LIFECYCLE_PAUSE && dZolaState != ZOLADEATH) setFragmentReturn("RESTART")
         //Toast.makeText(this, "[onBackPressed] Push Cancel Button", Toast.LENGTH_SHORT).show()
     }
@@ -226,7 +232,7 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
                         zolaMotionClass.setZolaDefaultMotion(playBinding.zola)
                         LIFECYCLE = LIFECYCLE_START
                         dZolaState = ZOLASTART
-                        zolaMotionClass.setZolaXY(playBinding.zola, layoutHeight - zolaHeight)
+                        zolaMotionClass.setZolaXY(playBinding, playBinding.zola, layoutHeight - zolaHeight)
                     })
                 } ?: run {
                     Log.d("PlayActivity", "[setFragmentReturn] The rewarded ad wasn't ready yet.")
@@ -235,6 +241,9 @@ class PlayActivity: AppCompatActivity(), View.OnTouchListener {
             }
         }
     }
+    /*fun getPlayBinding():ActivityPlayBinding{
+        return playBinding
+    }*/
 
     fun setRewardedAdCallback(){
         mRewardedAd?.fullScreenContentCallback = object: FullScreenContentCallback() {

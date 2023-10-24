@@ -2,13 +2,14 @@ package kr.jyh.jumper
 
 import android.content.Context
 import kotlinx.coroutines.Job
+import kr.jyh.jumper.Shared.PreferenceUtil
 
 import kr.jyh.jumper.databinding.ActivityPlayBinding
 import kr.jyh.jumper.databinding.ActivityScoreboardBinding
 import kr.jyh.jumper.databinding.ActivityStartBinding
 import kr.jyh.jumper.databinding.FragmentStopBinding
 
-lateinit var playBinding: ActivityPlayBinding
+//lateinit var playBinding: ActivityPlayBinding
 lateinit var fragmentBinding: FragmentStopBinding
 lateinit var scoreboardBinding: ActivityScoreboardBinding
 lateinit var startBinding: ActivityStartBinding
@@ -63,7 +64,7 @@ const val ZOLADEATH:Int = 4
 /**/
 const val GRAVITY_DOWN_SPEED:Int = 20
 /**/
-const val WALL_DOWN_SPEED:Int = 10
+var WALL_DOWN_SPEED:Int = 10
 
 var fragmentData:String = "일시 정지"
 
@@ -73,3 +74,7 @@ var lastWallId:Int = 0
 var remainWallCnt:Int = 0
 
 lateinit var UID:String
+lateinit var prer: PreferenceUtil
+
+var SCOREBOARDDATADELAY = 0
+var FIRST_START = 0

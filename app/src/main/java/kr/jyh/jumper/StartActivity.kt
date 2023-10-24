@@ -21,7 +21,6 @@ import kr.jyh.jumper.Socket.SocketClientClass
 
 class StartActivity : AppCompatActivity() {
     var isLogin = 0;
-    lateinit var prer:PreferenceUtil
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

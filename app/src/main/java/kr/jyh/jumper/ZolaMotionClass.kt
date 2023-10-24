@@ -6,9 +6,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kr.jyh.jumper.databinding.ActivityPlayBinding
 
 class ZolaMotionClass {
-    fun setZolaHeadBlood(){
+    private lateinit var pActivity: PlayActivity
+    fun setZolaHeadBlood(playBinding: ActivityPlayBinding){
         playBinding.zola.setBackgroundResource(R.drawable.bloodzola)
     }
     fun setZolaJumpMotion(zola: ImageView){
@@ -71,7 +73,7 @@ class ZolaMotionClass {
         return 0F
     }
 
-    fun setZolaXY(zola:ImageView, deathLine:Float){
+    fun setZolaXY(playBinding:ActivityPlayBinding,zola:ImageView, deathLine:Float){
         CoroutineScope(Dispatchers.Main).launch {
             Log.d("ZolaMotionClass", "[setZolaXY] CoroutineScope Start!!")
             while(true){
@@ -99,7 +101,7 @@ class ZolaMotionClass {
 
                 // 캐릭터 머리 천장에 부딫힘
                 if(zola.getY() <= 0) {
-                    setZolaHeadBlood()
+                    setZolaHeadBlood(playBinding)
                     break
                 }
 
@@ -109,7 +111,7 @@ class ZolaMotionClass {
             }
             dZolaState = ZOLADEATH
             val playActivity = PlayActivity()
-            playActivity.callStopFragment()
+            playActivity.callStopFragment(playBinding)
             Log.d("ZolaMotionClass", "[setZolaXY] CoroutineScope End!!")
         }
     }

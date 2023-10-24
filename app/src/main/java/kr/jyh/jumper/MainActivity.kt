@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kr.jyh.jumper.Room.JumpRoomDatabase
+import kr.jyh.jumper.Socket.SocketClientClass
 import kr.jyh.jumper.databinding.ActivityMainBinding
 
 class MainActivity : ComponentActivity() {

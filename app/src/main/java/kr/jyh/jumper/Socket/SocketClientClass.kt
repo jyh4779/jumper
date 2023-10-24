@@ -7,6 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kr.jyh.jumper.SCOREBOARDDATADELAY
+import kr.jyh.jumper.ScoreBoardActivity
+import kr.jyh.jumper.score
 import java.io.BufferedReader
 import java.io.DataInputStream
 import java.io.DataOutputStream
@@ -35,31 +38,57 @@ class SocketClientClass{
         return socket
     }*/
 
-    fun selectWolrdRecord() {
+    fun selectWolrdRecord(): Array<Array<String>> {
         Log.d("SocketClientClass", "[selectWolrdRecord] start!!")
 
-        CoroutineScope(Dispatchers.IO).async {
+        var scoreDataArr = arrayOf(arrayOf(" "," "," "),arrayOf(" "," "," "),arrayOf( " ", " ", " "),
+            arrayOf( " ", " ", " "),arrayOf( " ", " ", " "),arrayOf( " ", " ", " "),arrayOf( " ", " ", " ")
+            ,arrayOf( " ", " ", " "),arrayOf( " ", " ", " "),arrayOf( " ", " ", " "))
+
+        //CoroutineScope(Dispatchers.IO).async {
             sSocket = Socket(SERVER_IP, SERVER_PORT)
 
-            val outStream = sSocket.outputStream
-            val inStream = sSocket.getInputStream()
-            var reader = BufferedReader(InputStreamReader(inStream))
+            var connected = true
 
-            Log.d("SocketClientClass", "[selectWolrdRecord] Send Data [$SELECT_WORLD_RECORD]!!")
-            outStream.write(SELECT_WORLD_RECORD.toByteArray())
+            val reader = Scanner(sSocket.getInputStream())
+            val writer = sSocket.getOutputStream()
 
-            outStream.flush()
-            outStream.close()
+            writer.write(("SCOREBOARD\n").toByteArray(Charset.defaultCharset()))
 
-            val available = reader.readLine()
-            Log.d("SocketClientClass", "[selectWolrdRecord] Recieve Data [$available]!!")
+            while(connected){
+                //Log.d("SocketClientClass", "[loginToServer] Send Data [2]!!")
+                var input = reader.nextLine()
+                //Log.d("SocketClientClass", "[loginToServer] Recieve Data [$input]!!")
+                if("END" in input){
+                    Log.d("SocketClientClass", "[selectWolrdRecord] Recieve Data [$input]!!")
+                    connected = false
+                    writer.close()
+                    reader.close()
+                    sSocket.close()
+                } else if("SCOREDATA" in input){
+                    Log.d("SocketClientClass", "[selectWolrdRecord] Recieve Data [$input]!!")
+                    val stringList = input.split(";")
+                    val dataCnt = stringList[1]
+                    scoreDataArr[dataCnt.toInt()][0] = stringList[2]
+                    scoreDataArr[dataCnt.toInt()][1] = stringList[3]
+                    scoreDataArr[dataCnt.toInt()][2] = stringList[4]
+                    Log.d("SocketClientClass", "[selectWolrdRecord] Recieve Data date[${scoreDataArr[dataCnt.toInt()][0]}]!!")
+                    Log.d("SocketClientClass", "[selectWolrdRecord] Recieve Data name[${scoreDataArr[dataCnt.toInt()][1]}]!!")
+                    Log.d("SocketClientClass", "[selectWolrdRecord] Recieve Data score[${scoreDataArr[dataCnt.toInt()][2]}]!!")
 
-            /*if(available > 0){
-                val dataArr = ByteArray(available)
-                val data = String(dataArr)
-                Log.d("SocketClientClass", "[selectWolrdRecord] $data")
-            }*/
-        }
+                    var send_text = "DONE"
+                    writer.write(("$send_text\n").toByteArray(Charset.defaultCharset()))
+                }
+            }
+            for(i in 0..9){
+                Log.d("SocketClientClass", "[selectWolrdRecord] Recieve Data date[${scoreDataArr[i][0]}]!!")
+                Log.d("SocketClientClass", "[selectWolrdRecord] Recieve Data date[${scoreDataArr[i][1]}]!!")
+                Log.d("SocketClientClass", "[selectWolrdRecord] Recieve Data date[${scoreDataArr[i][2]}]!!")
+            }
+        //}
+
+        SCOREBOARDDATADELAY = 1
+        return scoreDataArr
     }
 
     fun loginToServer(email:String, name:String) {
@@ -73,7 +102,7 @@ class SocketClientClass{
             val reader = Scanner(sSocket.getInputStream())
             val writer = sSocket.getOutputStream()
 
-            writer.write(("2\n").toByteArray(Charset.defaultCharset()))
+            writer.write(("LOGIN\n").toByteArray(Charset.defaultCharset()))
 
             while(connected){
                 //Log.d("SocketClientClass", "[loginToServer] Send Data [2]!!")
@@ -113,13 +142,23 @@ class SocketClientClass{
             val reader = Scanner(sSocket.getInputStream())
             val writer = sSocket.getOutputStream()
 
-            writer.write(("3\n").toByteArray(Charset.defaultCharset()))
+            writer.write(("SCORE\n").toByteArray(Charset.defaultCharset()))
 
             while(connected){
                 //Log.d("SocketClientClass", "[loginToServer] Send Data [2]!!")
                 val input = reader.nextLine()
                 //Log.d("SocketClientClass", "[loginToServer] Recieve Data [$input]!!")
                 if("END" in input) {
+                    Log.d("SocketClientClass", "[saveScoreToServer] Recieve Data [$input]!!")
+                    connected = false
+                    writer.close()
+                    reader.close()
+                    sSocket.close()
+                } else if("INSERT" in input){
+                    Log.d("SocketClientClass", "[saveScoreToServer] Recieve Data [$input]!!")
+                    var send_text = email+";"+score
+                    writer.write(("$send_text\n").toByteArray(Charset.defaultCharset()))
+
                 }
             }
         }
